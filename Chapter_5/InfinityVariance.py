@@ -1,3 +1,9 @@
+#==================================================================
+# Python3
+# Copyright
+# 2019 Ye Xiang (xiang_ye@outlook.com)
+#==================================================================
+
 import numpy as np
 import matplotlib.pyplot as mplt_pyplt
 from progressbar import ProgressBar
@@ -150,8 +156,8 @@ def set_priority(pid=None,priority=1):
 
 if __name__ == '__main__':
     set_priority(priority = 4)
-    plot_ordinary(100000000, 10)   
-    #plot_weighted(10000, 10)     
+    plot_ordinary(1000000, 10)   
+    plot_weighted(10000, 10)     
         
             
     
