@@ -53,21 +53,20 @@ class gamblers_problem:
         prob_win = self.__Ph
         prob_lose = 1 - self.__Ph
         for i in range(1, self.__win_goal):
-            max_vs = self.__Vs[i]
-            max_act = 0
+            max_vs = np.round(self.__Vs[i], self.__dicimal_num)
+            max_actions = []
             for act in range(1, min(i, self.__win_goal - i) + 1):
-                tempVs = prob_win * (self.__get_reward(i + act) + self.__Vs[i + act]) \
-                    + prob_lose * (self.__get_reward(i - act) + self.__Vs[i - act])
-                # The accuracy has an impact on the result.In order to obtain a result as shown in the book,
-                # here use np.round(). The result is no unique, because tempVs may equal to max_vs in different
-                # states.
-                if np.round(tempVs, self.__dicimal_num) >= np.round(max_vs, self.__dicimal_num):
-                    max_vs = tempVs
-                    if max_act == 0:
-                        max_act = act
-            self.__policy[i] = max_act
-
-
+                tempVs = np.round(prob_win * (self.__get_reward(i + act) + self.__Vs[i + act]) \
+                    + prob_lose * (self.__get_reward(i - act) + self.__Vs[i - act]), self.__dicimal_num)           
+                if tempVs >= max_vs: # Here ">=" is used to get the argmax action. If only use ">", the argmax action 
+                    max_vs = tempVs  # may not be updated which will lead to unchanged status.
+                    if tempVs > max_vs:
+                        max_actions.clear()
+                    max_actions.append(act)
+            self.__policy[i] = max_actions[0] # With ties broken arbitarily, in order to get the result as the book, 
+                                              # the first action leads to maximum Vs is selected. The optimal policy
+                                              # is not unique. If you select any other argmax action, the policy will
+                                              # be changed.
 
     @property
     def policy(self):
@@ -132,9 +131,10 @@ def run_gambler_2(prob_head = 0.4, dicimal_num_list = []):
     mtplt.close()
 
 if __name__ == "__main__":
-    '''
+    
     run_gambler(0.4, 9)
     run_gambler(0.25, 9)
     run_gambler(0.55, 9)
     '''
     run_gambler_2(0.25, [1,3,5,7,9,11])
+    '''
