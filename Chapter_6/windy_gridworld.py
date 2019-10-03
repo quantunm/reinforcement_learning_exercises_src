@@ -1,3 +1,9 @@
+#==================================================================
+# Python3
+# Copyright
+# 2019 Ye Xiang (xiang_ye@outlook.com)
+#==================================================================
+
 import numpy as np
 import copy
 import matplotlib.pyplot as mplt_pyplt
