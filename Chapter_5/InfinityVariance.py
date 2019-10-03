@@ -58,7 +58,7 @@ class PolicyTester():
         for trj in trajectory:
             b *= 0.5
             if trj.action == ACTION_RIGHT: 
-                pai = 0
+                pai = 0 #The optimal policy should not act to right, because the reward is 0.
                 break
         return pai / b
 
@@ -107,7 +107,7 @@ class TestThread_ordinary(threading.Thread):
 def plot_ordinary(episodes, run_times):
     threads = []
     policy_testers = []
-    for i in range(0, run_times):
+    for _ in range(0, run_times):
         policy_tester = PolicyTester()
         thread = TestThread_ordinary(policy_tester, episodes)
         threads.append(thread)
@@ -126,7 +126,7 @@ def plot_ordinary(episodes, run_times):
     mplt_pyplt.show()
 
 def plot_weighted(episodes, run_times):
-    for i in range(0, run_times):
+    for _ in range(0, run_times):
         policy_tester = PolicyTester()
         policy_tester.MC_off_policy_first_visit_weighted(episodes)
         mplt_pyplt.plot(policy_tester.sampling_data)
